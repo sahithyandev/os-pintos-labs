@@ -376,6 +376,11 @@ static void whoami(char **argv) {
   printf("\nSahithyan K. 230557T\n");
 }
 
+static void command__time() {
+  time_t t = rtc_get_time();
+  printf("\nCurrent time: %lu\n", t);
+}
+
 /* Executes all of the actions specified in ARGV[]
    up to the null pointer sentinel. */
 static void
@@ -395,6 +400,7 @@ run_actions (char **argv)
       {"run", 2, run_task},
       {"whoami", 1, whoami},
       {"shutdown", 1, shutdown_and_exit},
+      {"time", 1, command__time},
 #ifdef FILESYS
       {"ls", 1, fsutil_ls},
       {"cat", 2, fsutil_cat},
