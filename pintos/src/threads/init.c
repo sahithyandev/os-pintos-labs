@@ -385,9 +385,22 @@ static void command__time() {
   printf("\nCurrent time: %lu\n", t);
 }
 
+static void command__thread(){
+  struct thread *cur = thread_current();
+  printf("\nCurrent thread:\n", cur->name);
+  printf("  allelem: %d\n", cur->allelem);
+  printf("  elem: %d\n", cur->elem);
+  printf("  elem: %d\n", cur->magic);
+  printf("  name: %s\n", cur->name);
+  printf("  priority: %d\n", cur->priority);
+  printf("  stack: %d\n", cur->stack);
+  printf("  status: %d\n", cur->status);
+  printf("  id: %d\n", cur->tid);
+}
+
 static void command__priority(){
   struct thread *cur = thread_current();
-  printf("\nCurrent thread priority: %d\n", cur->priority);
+  printf("\n%d\n", cur->priority);
 }
 
 /* Executes all of the actions specified in ARGV[]
@@ -410,6 +423,7 @@ run_actions (char **argv)
       {"whoami", 1, command__whoami},
       {"shutdown", 1, command__shutdown},
       {"time", 1, command__time},
+      {"thread", 1, command__thread},
       {"priority", 1, command__priority},
 #ifdef FILESYS
       {"ls", 1, fsutil_ls},
