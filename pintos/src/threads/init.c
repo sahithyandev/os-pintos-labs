@@ -366,6 +366,12 @@ static void run_interactively(char **argv) {
   }
 }
 
+static void shutdown_and_exit(char **argv) {
+  shutdown_configure(SHUTDOWN_POWER_OFF);
+  shutdown();
+  thread_exit();
+}
+
 /* Executes all of the actions specified in ARGV[]
    up to the null pointer sentinel. */
 static void
@@ -383,6 +389,7 @@ run_actions (char **argv)
   static const struct action actions[] = 
     {
       {"run", 2, run_task},
+      {"shutdown", 1, shutdown_and_exit},
 #ifdef FILESYS
       {"ls", 1, fsutil_ls},
       {"cat", 2, fsutil_cat},
