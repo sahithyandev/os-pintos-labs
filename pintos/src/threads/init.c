@@ -385,6 +385,11 @@ static void command__time() {
   printf("\nCurrent time: %lu\n", t);
 }
 
+static void command__priority(){
+  struct thread *cur = thread_current();
+  printf("\nCurrent thread priority: %d\n", cur->priority);
+}
+
 /* Executes all of the actions specified in ARGV[]
    up to the null pointer sentinel. */
 static void
@@ -405,6 +410,7 @@ run_actions (char **argv)
       {"whoami", 1, command__whoami},
       {"shutdown", 1, command__shutdown},
       {"time", 1, command__time},
+      {"priority", 1, command__priority},
 #ifdef FILESYS
       {"ls", 1, fsutil_ls},
       {"cat", 2, fsutil_cat},
