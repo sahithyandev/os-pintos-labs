@@ -63,6 +63,7 @@ static void paging_init (void);
 static char **read_command_line (void);
 static char **parse_options (char **argv);
 static void run_actions (char **argv);
+static void run_interactively (char **argv);
 static void usage (void);
 
 #ifdef FILESYS
@@ -134,6 +135,7 @@ pintos_init (void)
     run_actions (argv);
   } else {
     // TODO: no command line passed to kernel. Run interactively 
+    run_interactively(argv);
   }
 
   /* Finish up. */
@@ -294,6 +296,74 @@ run_task (char **argv)
   run_test (task);
 #endif
   printf ("Execution of '%s' complete.\n", task);
+}
+
+static void run_command(char *line) {
+  char *argv[32];
+  char *save_ptr;
+  argv[0] = strtok_r(line, " \n", &save_ptr);
+  if (argv[0] == NULL)
+    return;
+  int i;
+  for (i = 1; i < 32; i++) {
+    argv[i] = strtok_r(NULL, " \n", &save_ptr);
+    if (argv[i] == NULL)
+      break;
+  }
+  argv[i] = NULL;
+  run_actions(argv);
+}
+
+#define MAX_INPUT_LINE 128 
+
+static void run_interactively(char **argv) {
+  input_init();
+  for (;;) {
+    char line[MAX_INPUT_LINE];
+    line[0] = '\0';
+    printf("pintos> ");
+    uint8_t key;
+    while (true) {
+      key = input_getc();
+      intr_set_level(INTR_OFF);
+      if (input_full()) {
+        printf("\nInput buffer full, clearing input buffer.\n");
+        line[0] = '\0';
+        break;
+      }
+
+      if (key == '\r' || key == '\n') {
+        run_command(line);
+        line[0] = '\0';
+        printf("\n");
+        break;
+      }
+      if (key == 0x08 || key == 0x7f) { // Backspace or DEL
+        if (strlen(line) > 0) {
+          line[strlen(line) - 1] = '\0';
+          printf("\b \b");
+        }
+        continue;
+      }
+
+      strlcat(line, (char[]){(char)key, 0}, MAX_INPUT_LINE);
+      printf("%c", key);
+    }
+
+    char *save_ptr;
+    argv[0] = strtok_r(line, " \n", &save_ptr);
+    if (argv[0] == NULL)
+      continue;
+    int i;
+    for (i = 1; i < 32; i++) {
+      argv[i] = strtok_r(NULL, " \n", &save_ptr);
+      if (argv[i] == NULL)
+        break;
+    }
+    argv[i] = NULL;
+
+    run_actions(argv);
+  }
 }
 
 /* Executes all of the actions specified in ARGV[]
