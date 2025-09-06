@@ -366,13 +366,13 @@ static void run_interactively(char **argv) {
   }
 }
 
-static void shutdown_and_exit(char **argv) {
+static void command__shutdown(char **argv) {
   shutdown_configure(SHUTDOWN_POWER_OFF);
   shutdown();
   thread_exit();
 }
 
-static void whoami(char **argv) {
+static void command__whoami(char **argv) {
   printf("\nSahithyan K. 230557T\n");
 }
 
@@ -398,8 +398,8 @@ run_actions (char **argv)
   static const struct action actions[] = 
     {
       {"run", 2, run_task},
-      {"whoami", 1, whoami},
-      {"shutdown", 1, shutdown_and_exit},
+      {"whoami", 1, command__whoami},
+      {"shutdown", 1, command__shutdown},
       {"time", 1, command__time},
 #ifdef FILESYS
       {"ls", 1, fsutil_ls},
