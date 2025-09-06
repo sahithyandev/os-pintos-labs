@@ -333,6 +333,10 @@ static void run_interactively(char **argv) {
       }
 
       if (key == '\r' || key == '\n') {
+        if (strcmp(line, "exit") == 0) {
+          printf("\n");
+          return;
+         }
         run_command(line);
         line[0] = '\0';
         printf("\n");
