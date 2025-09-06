@@ -372,6 +372,10 @@ static void shutdown_and_exit(char **argv) {
   thread_exit();
 }
 
+static void whoami(char **argv) {
+  printf("\nSahithyan K. 230557T\n");
+}
+
 /* Executes all of the actions specified in ARGV[]
    up to the null pointer sentinel. */
 static void
@@ -389,6 +393,7 @@ run_actions (char **argv)
   static const struct action actions[] = 
     {
       {"run", 2, run_task},
+      {"whoami", 1, whoami},
       {"shutdown", 1, shutdown_and_exit},
 #ifdef FILESYS
       {"ls", 1, fsutil_ls},
