@@ -385,6 +385,10 @@ static void command__time() {
   printf("\nCurrent time: %lu\n", t);
 }
 
+static void command__ram() {
+  printf("\n%u kB\n", init_ram_pages * PGSIZE / 1024);
+}
+
 static void command__thread(){
   struct thread *cur = thread_current();
   printf("\nCurrent thread:\n", cur->name);
@@ -423,6 +427,7 @@ run_actions (char **argv)
       {"whoami", 1, command__whoami},
       {"shutdown", 1, command__shutdown},
       {"time", 1, command__time},
+      {"ram", 1, command__ram},
       {"thread", 1, command__thread},
       {"priority", 1, command__priority},
 #ifdef FILESYS
