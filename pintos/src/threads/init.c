@@ -364,21 +364,21 @@ static void command__shutdown(char **argv) {
 }
 
 static void command__whoami(char **argv) {
-  printf("\nSahithyan K. 230557T\n");
+  printf("Sahithyan K. 230557T");
 }
 
 static void command__time() {
   time_t t = rtc_get_time();
-  printf("\nCurrent time: %lu\n", t);
+  printf("Current time: %lu", t);
 }
 
 static void command__ram() {
-  printf("\n%u kB\n", init_ram_pages * PGSIZE / 1024);
+  printf("%u kB", init_ram_pages * PGSIZE / 1024);
 }
 
 static void command__thread(){
   struct thread *cur = thread_current();
-  printf("\nCurrent thread:\n", cur->name);
+  printf("Current thread:\n", cur->name);
   printf("  allelem: %d\n", cur->allelem);
   printf("  elem: %d\n", cur->elem);
   printf("  elem: %d\n", cur->magic);
@@ -386,12 +386,12 @@ static void command__thread(){
   printf("  priority: %d\n", cur->priority);
   printf("  stack: %d\n", cur->stack);
   printf("  status: %d\n", cur->status);
-  printf("  id: %d\n", cur->tid);
+  printf("  id: %d", cur->tid);
 }
 
 static void command__priority(){
   struct thread *cur = thread_current();
-  printf("\n%d\n", cur->priority);
+  printf("%d", cur->priority);
 }
 
 /* Executes all of the actions specified in ARGV[]
