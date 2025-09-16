@@ -337,6 +337,7 @@ static void run_interactively(char **argv) {
           printf("\n");
           return;
          }
+        printf("\n");
         run_command(line);
         line[0] = '\0';
         printf("\n");
