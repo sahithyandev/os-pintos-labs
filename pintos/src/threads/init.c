@@ -434,8 +434,11 @@ run_actions (char **argv)
 
       /* Find action name. */
       for (a = actions; ; a++)
-        if (a->name == NULL)
-          PANIC ("unknown action `%s' (use -h for help)", *argv);
+        if (a->name == NULL) {
+
+          printf("unknown command: `%s'", *argv);
+          return;
+        }
         else if (!strcmp (*argv, a->name))
           break;
 
