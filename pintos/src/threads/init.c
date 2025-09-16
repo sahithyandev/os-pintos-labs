@@ -354,20 +354,6 @@ static void run_interactively(char **argv) {
       strlcat(line, (char[]){(char)key, 0}, MAX_INPUT_LINE);
       printf("%c", key);
     }
-
-    char *save_ptr;
-    argv[0] = strtok_r(line, " \n", &save_ptr);
-    if (argv[0] == NULL)
-      continue;
-    int i;
-    for (i = 1; i < 32; i++) {
-      argv[i] = strtok_r(NULL, " \n", &save_ptr);
-      if (argv[i] == NULL)
-        break;
-    }
-    argv[i] = NULL;
-
-    run_actions(argv);
   }
 }
 
